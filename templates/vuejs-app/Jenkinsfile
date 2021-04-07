@@ -10,7 +10,9 @@ pipeline {
   environment {
     repoOwner = "${repoOwner}"
     credId = "${githubCredentialId}"
-    testVar = "test1"
+    scannerHome = tool 'SonarQubeScanner'
+    sonarOrg = "cb-fidelity-sandbox"
+    sonarProject = "microblog-js"
   }
   stages('VueJS Test and Build')
   {
@@ -34,12 +36,11 @@ pipeline {
     stage('Sonar scan') {
       agent any
       steps {
-          script {
-              scannerHome = tool 'SonarScanner';
-          }
           withSonarQubeEnv('fid-sonar') {
             // This expands the evironment variables SONAR_CONFIG_NAME, SONAR_HOST_URL, SONAR_AUTH_TOKEN that can be used by any script.
-            sh "${scannerHome}/bin/sonar-scanner"
+            sh '''${scannerHome}/bin/sonar-scanner -Dsonar.organization=$sonarOrg \
+                  -Dsonar.projectKey=$sonarProject \
+            '''
           }
       } 
     }
