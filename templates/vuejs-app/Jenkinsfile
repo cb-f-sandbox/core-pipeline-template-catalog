@@ -38,9 +38,7 @@ pipeline {
       steps {
           withSonarQubeEnv('fid-sonar') {
             // This expands the evironment variables SONAR_CONFIG_NAME, SONAR_HOST_URL, SONAR_AUTH_TOKEN that can be used by any script.
-            sh '''${scannerHome}/bin/sonar-scanner -Dsonar.organization=$sonarOrg \
-                  -Dsonar.projectKey=$sonarProject \
-            '''
+            sh "${scannerHome}/bin/sonar-scanner -Dsonar.organization=$sonarOrg -Dsonar.projectKey=$sonarProject"
           }
       } 
     }
