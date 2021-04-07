@@ -15,7 +15,7 @@ pipeline {
   }
   stages('VueJS Test and Build')
   {
-    stage('VueJS Test and Scan') {
+    stage('Kick off Test and Scan') {
       agent {
         kubernetes {
           label 'nodejs'
