@@ -15,33 +15,36 @@ pipeline {
   }
   stages('VueJS Test and Build')
   {
-    stage('VueJS Tests') {
+    stage('VueJS Test and Scan') {
       agent {
         kubernetes {
           label 'nodejs'
           yaml testPodYaml
        }
       }
-      steps {
-            checkout scm           
-            container('nodejs') {
-              sh '''
-                 yarn install
-                 yarn test:unit
-                 '''
-            }
-      } 
-    }
-    stage('Sonar scan') {
-      agent any
-      steps {
-        script{
-          scannerHome = tool 'SonarScanner';
-        }
-          withSonarQubeEnv('fid-sonar') {
-            // This expands the evironment variables SONAR_CONFIG_NAME, SONAR_HOST_URL, SONAR_AUTH_TOKEN that can be used by any script.
-            sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=$sonarProject -Dsonar.host.url=https://sonar.fidelity-sda.cb-demos.io -Dsonar.login=${env.SONAR_AUTH_TOKEN}"
+      stages {
+        stage('VueJS Test'){
+           steps {
+                checkout scm           
+                container('nodejs') {
+                  sh '''
+                     yarn install
+                     yarn test:unit
+                     '''
+                }
           }
+        }
+        stage('Sonar Scan') {
+          steps {
+                  script{
+                    scannerHome = tool 'SonarScanner';
+                  }
+                    withSonarQubeEnv('fid-sonar') {
+                      // This expands the evironment variables SONAR_CONFIG_NAME, SONAR_HOST_URL, SONAR_AUTH_TOKEN that can be used by any script.
+                      sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=$sonarProject -Dsonar.host.url=https://sonar.fidelity-sda.cb-demos.io -Dsonar.login=${env.SONAR_AUTH_TOKEN}"
+                    }
+                }           
+        }
       } 
     }
     stage('Build and Push Image') {
