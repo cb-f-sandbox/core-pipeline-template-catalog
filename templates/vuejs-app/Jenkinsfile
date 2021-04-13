@@ -32,7 +32,7 @@ pipeline {
                      yarn add --dev jest-junit
                      yarn test:unit --reporters=default --reporters=jest-junit
                    '''
-                  sh "ls test/"
+                  sh "ls tests/"
                   junit 'tests/results/*.xml'
                 }
           }
