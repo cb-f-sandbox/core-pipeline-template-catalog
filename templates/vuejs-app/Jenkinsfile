@@ -27,7 +27,7 @@ pipeline {
            steps {
                 checkout scm           
                 container('nodejs') {
-                  withEnv(["JEST_JUNIT_OUTPUT_NAME=./jest-test-results.xml"]) {
+                  withEnv(["JEST_JUNIT_OUTPUT_NAME=jest-test-results.xml"]) {
                      sh '''
                        yarn install
                        yarn add --dev jest-junit
