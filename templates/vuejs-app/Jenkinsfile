@@ -29,7 +29,7 @@ pipeline {
                 container('nodejs') {
                    sh '''
                      yarn install
-                     yarn add --dev jest
+                     yarn add --dev jest-junit
                      yarn test:unit --reporters=default --reporters=jest-junit
                    '''
                   junit testResults: 'junit.xml'
