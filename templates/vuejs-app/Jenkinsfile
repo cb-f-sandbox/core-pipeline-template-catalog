@@ -30,12 +30,9 @@ pipeline {
                   withEnv(["JEST_JUNIT_OUTPUT_NAME=jest-test-results.xml"]) {
                      sh '''
                        yarn install
-                       yarn add --dev jest-junit
                        yarn test:unit --ci --reporters=default --reporters=jest-junit
-                       ls src/
                      '''                   
                   }
-                  sh "ls"
                   junit 'jest-test-results.xml'
                 }
           }
