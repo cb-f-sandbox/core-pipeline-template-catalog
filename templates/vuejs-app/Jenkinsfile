@@ -30,7 +30,7 @@ pipeline {
                   sh '''
                      yarn install
                      yarn add --dev jest
-                     yarn test:unit --testResultsProcessor="jest-junit"
+                     yarn test:unit --reporters=default --reporters=jest-junit
                      '''
                 }
           }
