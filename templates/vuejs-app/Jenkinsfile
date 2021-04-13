@@ -29,7 +29,8 @@ pipeline {
                 container('nodejs') {
                   sh '''
                      yarn install
-                     yarn test:unit
+                     yarn add --dev jest
+                     yarn test:unit --testResultsProcessor="jest-junit"
                      '''
                 }
           }
