@@ -27,13 +27,12 @@ pipeline {
            steps {
                 checkout scm           
                 container('nodejs') {
-                  withEnv(["JEST_JUNIT_OUTPUT_NAME=jest-test-results.xml"]) {
-                     sh '''
-                       yarn install
-                       yarn test:unit --ci --reporters=default --reporters=jest-junit
-                     '''                   
-                  }
-                  junit 'jest-test-results.xml'
+                   sh '''
+                     yarn install
+                     yarn test:unit --ci --reporters=default --reporters=jest-junit
+                     ls output/coverage/junit/
+                   '''     
+                  junit 'output/coverage/junit/junit.xml'
                 }
           }
         }
