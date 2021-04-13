@@ -27,14 +27,12 @@ pipeline {
            steps {
                 checkout scm           
                 container('nodejs') {
-                  withEnv(["JEST_JUNIT_OUTPUT=./jest-test-results.xml"]) {
-                     sh '''
-                       yarn install
-                       yarn add --dev jest
-                       yarn test:unit --reporters=default --reporters=jest-junit
-                     '''
-                  }
-                  junit 'jest-test-results.xml'
+                   sh '''
+                     yarn install
+                     yarn add --dev jest
+                     yarn test:unit --reporters=default --reporters=jest-junit
+                   '''
+                  junit testResults: 'junit.xml'
                 }
           }
         }
