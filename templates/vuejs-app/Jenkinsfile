@@ -32,6 +32,8 @@ pipeline {
                        yarn install
                        yarn add --dev jest-junit
                        yarn test:unit --ci --reporters=default --reporters=jest-junit
+                       cat jest.config.js
+                       ls tests/
                      '''                   
                   }
                   sh "ls"
