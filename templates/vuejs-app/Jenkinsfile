@@ -27,7 +27,7 @@ pipeline {
            steps {
                 checkout scm           
                 container('nodejs') {
-                  echo env.BRANCH_NAME
+                  echo "PR? ${env.BRANCH_NAME}"
                    sh '''
                      yarn install
                      yarn test:unit --ci --reporters=default --reporters=jest-junit
